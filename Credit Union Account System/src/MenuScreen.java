@@ -24,11 +24,11 @@ public class MenuScreen extends JFrame
 			}
 		}
 	);
-	add( deleteAccount, BorderLayout.NORTH );
+	getContentPane().add( deleteAccount, BorderLayout.NORTH );
 
     //add( menuPanel);
 
-    setSize(300,100);
+    setSize(250,400);
     setVisible( true );
     }
 
