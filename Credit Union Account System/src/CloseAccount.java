@@ -9,7 +9,7 @@ import java.text.DecimalFormat;
 public class CloseAccount extends JFrame implements ActionListener
 {
 //create GUI components
-private JTextField accountField, firstNameField, lastNameField, balanceField;
+private JTextField accountField, firstNameField, lastNameField, balanceField, overdraft;
 private JButton closeBut, exitBut;
 private RandomAccessFile input, output;
 private Record data;
@@ -32,12 +32,24 @@ try
 
 data = new Record();
 
+	//block of could to find center of screen and offset Jpanel to stay in the center of the screen	
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	
+	int screenHeight = Integer.parseInt(String.format("%.0f",(screenSize.getHeight())));
+	int screenWidth = Integer.parseInt(String.format("%.0f",(screenSize.getWidth())));
+	int frameWidth = 586;
+	int frameHeight = 446;
+	
+	setBounds((screenWidth/2)-(frameWidth/2),(screenHeight/2)-(frameHeight/2), frameWidth, frameHeight);
+	
+
+
 //create the components of the Frame
-setSize( 320, 150 );
-setLayout( new GridLayout(5, 2) );
+setSize( 586, 446 );
+setLayout( new GridLayout(7, 2) );
 
 
-add( new JLabel( "Account Number (1 - 100)" ) );
+add( new JLabel( "Account Number (1 - 1000)" ) );
 accountField = new JTextField(15);
 accountField.setEditable( true );
 add( accountField );
@@ -57,6 +69,11 @@ add( new JLabel( "Account Balance" ) );
 balanceField = new JTextField(15);
 balanceField.setEditable( false );
 add( balanceField );
+
+add( new JLabel( "Overdraft amount" ) );
+overdraft = new JTextField(15);
+overdraft.setEditable( false );
+add( overdraft );
 
 
 closeBut = new JButton( "Close Account");
@@ -87,12 +104,15 @@ public void actionPerformed( ActionEvent e )
   	{
    try
       {
-   	 int accountNumber = Integer.parseInt( accountField.getText() );
+	   
+	  if(data.getBalance()==0.00) { 
+   	  int accountNumber = Integer.parseInt( accountField.getText() );
 
 	  data.setAccount( 0 );
 	  data.setFirstName( null );
 	  data.setLastName( null);
 	  data.setBalance( 0);
+	  data.setOverdraft(0);
 
 	  output.seek( (long) ( accountNumber-1 ) * Record.size() );
 	  data.write( output );
@@ -102,16 +122,24 @@ public void actionPerformed( ActionEvent e )
 	  firstNameField.setText("");
 	  lastNameField.setText("");
 	  balanceField.setText("");
-	  }//end try
+	  overdraft.setText("");
+	  }
+	  else {
+	      JOptionPane.showMessageDialog(this, "Balance must be Zero before closing account");
+	   		}
+      }//end try
+   
 	 catch (NumberFormatException nfe )
    	  	 {
-   	  	  System.err.println("You must enter an integer account number");
+   	  	  System.err.println("You must enter an"
+   	  	  		+ " account number");
    	  	 }
    	 catch (IOException io)
    	  	 {
    	  	  System.err.println("error during write to file\n" + io.toString() );
    	      }
      }
+  validate();
  } //end actionPerformed
 
 public void readRecord()
@@ -121,9 +149,10 @@ public void readRecord()
 	{
 		int accountNumber = Integer.parseInt(accountField.getText());
 
-		if (accountNumber < 1 || accountNumber > 100)
+		if (accountNumber < 1 || accountNumber > 1000)
 			{
 			JOptionPane.showMessageDialog(this, "Account does not exist");
+			
 			}
 			else
 			{
@@ -133,13 +162,16 @@ public void readRecord()
        			accountField.setText(String.valueOf( data.getAccount() ) );
        			firstNameField.setText( data.getFirstName() );
        			lastNameField.setText( data.getLastName() );
-       			balanceField.setText( String.valueOf(
-       			twoDigits.format( data.getBalance() ) ) );
+       			balanceField.setText( String.valueOf(twoDigits.format( data.getBalance() ) ) );
+       			overdraft.setText( String.valueOf(twoDigits.format( data.getOverdraft() ) ) );
        		}
        		if (data.getAccount() == 0)
        		{
 				JOptionPane.showMessageDialog(this, "Account does not exist");
 				accountField.setText("");
+				balanceField.setText("");
+				overdraft.setText("");
+				validate();
 			}
  	}//end try statement
  	catch (EOFException eof )
@@ -155,6 +187,8 @@ public void readRecord()
 
 private void closeFile()
 {
+	
+		
 	try
     {
     input.close();
@@ -164,11 +198,8 @@ private void closeFile()
     {
     System.err.println( "Error closing file \n" + e.toString() );
     }
+	
 }// end closeFile method
 
-public static void main(String [] args)
-    {
-     new CloseAccount();
-   }
 
 }

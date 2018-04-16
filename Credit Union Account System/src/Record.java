@@ -8,6 +8,7 @@ private int account;
 private String lastName;
 private String firstName;
 private double balance;
+private double overdraft;
 
 public void read( RandomAccessFile file ) throws IOException
 {
@@ -28,6 +29,9 @@ for (int i =0; i<last.length; i++)
 lastName = new String (last);
 
 balance = file.readDouble();
+overdraft = file.readDouble();
+
+
 }
 public void write( RandomAccessFile file) throws IOException
 {
@@ -55,6 +59,7 @@ buf.setLength( 15 );
 file.writeChars( buf.toString() );
 
 file.writeDouble( balance );
+file.writeDouble(overdraft);
 }
 public void setAccount( int a ) { account = a; }
 
@@ -70,10 +75,14 @@ public String getLastName() { return lastName; }
 
 public void setBalance( double b) {balance = b;}
 
+public void setOverdraft( double x ) {overdraft = x;}
+
 public double getBalance() {return balance;}
 
+public double getOverdraft() {return overdraft;}
+
 //determines size (bytes) of each file
-public static int size() { return 72;}
+public static int size() { return 80;}
 }
 
 

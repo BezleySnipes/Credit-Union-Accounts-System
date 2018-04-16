@@ -18,7 +18,7 @@ public class CreateRandomFile
 
     file = new RandomAccessFile( "credit.dat", "rw" );
 
-    for (int i=0; i<100; i++)
+    for (int i=0; i<1000; i++)
     blank.write( file );
 
    }
@@ -32,12 +32,6 @@ public class CreateRandomFile
    System.exit( 1 );
 
   }
-}
-
-public static void main( String [] args )
-
-{
-  CreateRandomFile accounts = new CreateRandomFile();
 }
 
 }

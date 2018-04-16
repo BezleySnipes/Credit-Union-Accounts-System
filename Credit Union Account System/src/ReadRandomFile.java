@@ -11,7 +11,7 @@ import java.text.DecimalFormat;
 public class ReadRandomFile extends JFrame implements ActionListener
 {
 //create GUI components
-private JTextField IDField, firstNameField, lastNameField, payField;
+private JTextField accountNumber, firstNameField, lastNameField, balance, overdraft;
 private JButton next, done;
 private RandomAccessFile input, output;
 private Record data;
@@ -38,36 +38,41 @@ data = new Record();
 
 
 //set out layout
-setSize( 300, 150 );
-setLayout( new GridLayout(5,2) );
+setSize( 299, 481 );
+getContentPane().setLayout(new GridLayout(7, 2, 0, 0));
 
-add( new JLabel( "ID Number" ) );
-IDField = new JTextField(15);
-IDField.setEditable( false );
-add( IDField );
+getContentPane().add( new JLabel( "Account Number" ) );
+accountNumber = new JTextField(15);
+accountNumber.setEditable( false );
+getContentPane().add( accountNumber );
 
-add( new JLabel( "First Name" ) );
+getContentPane().add( new JLabel( "First Name" ) );
 firstNameField = new JTextField(15);
 firstNameField.setEditable( false );
-add( firstNameField );
+getContentPane().add( firstNameField );
 
-add( new JLabel( "Last Name" ) );
+getContentPane().add( new JLabel( "Last Name" ) );
 lastNameField = new JTextField(15);
 lastNameField.setEditable( false );
-add( lastNameField );
+getContentPane().add( lastNameField );
 
-add( new JLabel( "Rate of Pay" ) );
-payField = new JTextField(15);
-payField.setEditable( false );
-add( payField );
+getContentPane().add( new JLabel( "Balance" ) );
+balance = new JTextField(15);
+balance.setEditable( false );
+getContentPane().add( balance );
+
+getContentPane().add( new JLabel( "overdraft" ) );
+overdraft = new JTextField(15);
+overdraft.setEditable( false );
+getContentPane().add( overdraft );
 
 next = new JButton ("Next");
 next.addActionListener(this);
-add (next);
+getContentPane().add (next);
 
 done = new JButton ("Done");
 done.addActionListener(this);
-add (done);
+getContentPane().add (done);
 
 setVisible( true );
 }
@@ -98,12 +103,12 @@ public void readRecord()
 
 	 while (data.getAccount() == 0);
 
-	IDField.setText(String.valueOf( data.getAccount() ) );
+	accountNumber.setText(String.valueOf( data.getAccount() ) );
     firstNameField.setText( data.getFirstName() );
     lastNameField.setText( data.getLastName() );
-    payField.setText( String.valueOf(
-    twoDigits.format( data.getBalance() ) ) );
-     }
+    balance.setText( String.valueOf(twoDigits.format( data.getBalance() ) ) );
+    overdraft.setText( String.valueOf(twoDigits.format( data.getOverdraft() ) ) );
+    }
 	catch (EOFException eof )
      {
      closeFile();     }
@@ -127,11 +132,5 @@ private void closeFile()
 		System.err.println( "Error closing file \n" + e.toString() );
 	}
 }
-//Instantiate a ReadRandomFile object and start the program
-
-  public static void main(String [] args)
-   {
-    new ReadRandomFile();
-   }
 
 }//end class
