@@ -1,3 +1,10 @@
+///////////////////////////////////
+/////  David Mulhall          /////
+/////  Assignment 4           /////
+/////  B00107874              /////
+/////  17/04/2018             /////
+///////////////////////////////////
+
 //ReadRandomFile.java
 //this program read a random access file sequentally and
 //displays the content one record at a time in text fields

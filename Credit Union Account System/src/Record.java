@@ -1,3 +1,10 @@
+///////////////////////////////////
+/////  David Mulhall          /////
+/////  Assignment 4           /////
+/////  B00107874              /////
+/////  17/04/2018             /////
+///////////////////////////////////
+
 //Initial program for creation of file to contain various accounts
 import java.io.*;
 import javax.swing.*;

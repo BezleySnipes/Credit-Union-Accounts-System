@@ -1,3 +1,10 @@
+///////////////////////////////////
+/////  David Mulhall          /////
+/////  Assignment 4           /////
+/////  B00107874              /////
+/////  17/04/2018             /////
+///////////////////////////////////
+
 // This section will create a random access file and
 // will write 100 empty records to file.
 

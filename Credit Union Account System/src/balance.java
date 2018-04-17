@@ -1,3 +1,10 @@
+///////////////////////////////////
+/////  David Mulhall          /////
+/////  Assignment 4           /////
+/////  B00107874              /////
+/////  17/04/2018             /////
+///////////////////////////////////
+
 //this class will allow the user to read data for a particular account
 //and delete the account
 import java.io.*;

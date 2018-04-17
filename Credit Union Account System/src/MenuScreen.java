@@ -1,3 +1,10 @@
+///////////////////////////////////
+/////  David Mulhall          /////
+/////  Assignment 4           /////
+/////  B00107874              /////
+/////  17/04/2018             /////
+///////////////////////////////////
+
 //this class contains button that when click calls
 //another class  delete records.
 import java.awt.event.*;
